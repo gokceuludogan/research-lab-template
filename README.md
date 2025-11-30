@@ -26,7 +26,7 @@ Follow these steps to create your own version of this lab website.
 4. Under **Branch**, select `gh-pages` and save.
    * *Note: If you do not see `gh-pages` yet, you may need to make your first edit (see below) to trigger the workflow. Wait 2-3 minutes, then come back here.*
 
----
+
 
 ## How to Edit
 
