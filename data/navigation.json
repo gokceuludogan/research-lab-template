@@ -1,0 +1,8 @@
+{
+  "Home": true,
+  "Research": true,
+  "Team": true,
+  "Publications": true,
+  "Teaching": false,
+  "Contact": false
+}
