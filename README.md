@@ -51,11 +51,16 @@ The content pages use Markdown, which is easy to write.
     * Use `*text*` for italics.
     * Use `-` for bullet points.
 
-### 3. Adding a New Page (e.g., Teaching)
-1.  Create a new file in the `content/` folder (e.g., `teaching.md`).
-2.  Write your content using Markdown.
-3.  *(Optional)* To make this page appear in the navigation bar, you may need to edit `templates/layout.html` to add the link, or ask the admin to do so.
+### 3. Adding or Removing Pages from Navigation
+You can control the website menu using a simple switch.
 
+1.  **Create the content:** Create a new file in the `content/` folder (e.g., `teaching.md`).
+2.  **Update the Menu:** Open `data/navigation.json`.
+3.  Add your page name and set it to `true`.
+    * Example: `"Teaching": true`
+    * To hide a page without deleting the file, simply change it to `false`.
+  
+    
 ## How it Works (Automated)
 
 This website uses an automated "Continuous Deployment" approach. You do not need to run anything on your own computer.
