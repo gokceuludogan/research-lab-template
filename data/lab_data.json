@@ -1,0 +1,47 @@
+{
+  "lab_name": "Helix Research Group",
+  "university": "Institute of Science",
+  "description": "Investigating the intersection of computational biology and organic chemistry.",
+  "news": [
+    {
+      "date": "2023-10-15",
+      "title": "New Grant Awarded",
+      "text": "We have received the NSF Pioneer grant for our work on synthetic enzymes."
+    },
+    {
+      "date": "2023-09-01",
+      "title": "Welcome Dr. Smith",
+      "text": "Dr. Smith joins us as a Postdoc from MIT."
+    }
+  ],
+  "team": [
+    {
+      "name": "Dr. Elena Vance",
+      "role": "Principal Investigator",
+      "bio": "Ph.D. in Biophysics. Focuses on molecular dynamics.",
+      "email": "evance@example.edu"
+    },
+    {
+      "name": "Marcus Webb",
+      "role": "PhD Candidate",
+      "bio": "Working on GPU acceleration for simulations.",
+      "email": "mwebb@example.edu"
+    }
+  ],
+  "publications": [
+    {
+      "title": "Structural Analysis of Protein X",
+      "authors": "Vance E., Webb M.",
+      "journal": "Nature Computational Science",
+      "year": "2023",
+      "link": "https://doi.org/..."
+    },
+    {
+      "title": "A New Algorithm for Folding",
+      "authors": "Webb M., Vance E.",
+      "journal": "J. Chem. Phys",
+      "year": "2022",
+      "link": "#"
+    }
+  ]
+}
