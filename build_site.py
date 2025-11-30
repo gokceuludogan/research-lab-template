@@ -6,7 +6,7 @@ from jinja2 import Environment, FileSystemLoader
 # Configuration
 CONTENT_DIR = 'content'
 DATA_DIR = 'data'
-OUTPUT_DIR = 'docs' 
+OUTPUT_DIR = 'public' 
 TEMPLATE_DIR = 'templates'
 
 # Ensure output directory exists
