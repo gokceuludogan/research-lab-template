@@ -7,12 +7,8 @@ A streamlined, maintenance-free website template designed for academic research 
 
 Follow these steps to create your own version of this lab website.
 
-### 1. Fork the Repository
-1. Look at the top-right corner of this page.
-2. Click the **Fork** button.
-3. Select **"Create a new fork"**.
-4. Choose the repository owner (your personal account or your lab's organization).
-5. Click **Create fork**.
+### 1. Create your Repository
+Click the "Use this template" button at the top right of this page to create your own copy of this repository.
 
 ### 2. Enable GitHub Actions
 *Note: Sometimes GitHub disables automation on forked repositories for security.*
