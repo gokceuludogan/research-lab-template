@@ -6,12 +6,11 @@ from jinja2 import Environment, FileSystemLoader
 # Configuration
 CONTENT_DIR = 'content'
 DATA_DIR = 'data'
-OUTPUT_DIR = 'public' 
+OUTPUT_DIR = 'public'
 TEMPLATE_DIR = 'templates'
 
 # Ensure output directory exists
-if not os.path.exists(OUTPUT_DIR):
-    os.makedirs(OUTPUT_DIR)
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # 1. Load Data
 def load_json(filename):
@@ -32,7 +31,7 @@ for page_name, is_enabled in nav_config.items():
             link = "index.html"
         else:
             link = f"{page_name.lower()}.html"
-        
+
         nav_items.append({
             "name": page_name,
             "link": link
@@ -42,44 +41,70 @@ for page_name, is_enabled in nav_config.items():
 env = Environment(loader=FileSystemLoader(TEMPLATE_DIR))
 template = env.get_template('layout.html')
 
-# 4. Generate Pages
-for filename in os.listdir(CONTENT_DIR):
-    if filename.endswith('.md'):
-        file_path = os.path.join(CONTENT_DIR, filename)
-        
-        with open(file_path, 'r', encoding='utf-8') as f:
-            md_content = f.read()
-            
-        html_content = markdown.markdown(md_content)
-        
-        # Determine basic file info
-        base_name = os.path.splitext(filename)[0] # e.g., 'research'
-        
-        # Logic to identify Home vs Other pages
-        if base_name.lower() in ['home', 'index']:
-            output_filename = 'index.html'
-            is_home = True
-            page_title = "Home"
-            active_page = "Home"
-        else:
-            output_filename = f"{base_name.lower()}.html"
-            is_home = False
-            # Capitalize first letter for title (e.g., "teaching" -> "Teaching")
-            page_title = base_name.capitalize() 
-            active_page = page_title
+# 4. Generate pages from Markdown (if any)
+md_files = [
+    f for f in os.listdir(CONTENT_DIR)
+    if os.path.isfile(os.path.join(CONTENT_DIR, f))
+    and f.lower().endswith('.md')
+]
 
-        # Render the template
-        # NOTICE: We pass 'data=lab_data' because the HTML uses {{ data.lab_name }}
-        output_html = template.render(
-            content=html_content,
-            nav_items=nav_items,
-            data=lab_data,       
-            is_home=is_home,
-            page_title=page_title,
-            active_page=active_page
-        )
-        
-        with open(os.path.join(OUTPUT_DIR, output_filename), 'w', encoding='utf-8') as f:
-            f.write(output_html)
-            
-print(f"Site generated successfully. Processed {len(os.listdir(CONTENT_DIR))} pages.")
+print("Found markdown files:", md_files)
+
+for filename in md_files:
+    file_path = os.path.join(CONTENT_DIR, filename)
+
+    with open(file_path, 'r', encoding='utf-8') as f:
+        md_content = f.read()
+
+    html_content = markdown.markdown(md_content)
+
+    base_name = os.path.splitext(filename)[0]
+    base_lower = base_name.lower()
+
+    if base_lower in ['home', 'index']:
+        output_filename = 'index.html'
+        is_home = True
+        page_title = "Home"
+        active_page = "Home"
+        print(f"Generating HOME page from {filename} -> {output_filename}")
+    else:
+        output_filename = f"{base_lower}.html"
+        is_home = False
+        page_title = base_name.capitalize()
+        active_page = page_title
+        print(f"Generating page from {filename} -> {output_filename}")
+
+    output_html = template.render(
+        content=html_content,
+        nav_items=nav_items,
+        data=lab_data,
+        is_home=is_home,
+        page_title=page_title,
+        active_page=active_page
+    )
+
+    with open(os.path.join(OUTPUT_DIR, output_filename), 'w', encoding='utf-8') as f:
+        f.write(output_html)
+
+# 5. ALWAYS build index.html even if there was no home.md / index.md
+# Try to get homepage content from lab_data if available
+default_home_md = lab_data.get(
+    "home_markdown",
+    f"# {lab_data.get('lab_name', 'Welcome')}\n\nWelcome to our lab website."
+)
+
+home_html_content = markdown.markdown(default_home_md)
+
+index_html = template.render(
+    content=home_html_content,
+    nav_items=nav_items,
+    data=lab_data,
+    is_home=True,
+    page_title="Home",
+    active_page="Home"
+)
+
+with open(os.path.join(OUTPUT_DIR, "index.html"), "w", encoding="utf-8") as f:
+    f.write(index_html)
+
+print(f"Site generated successfully. Processed {len(md_files)} markdown pages.")
